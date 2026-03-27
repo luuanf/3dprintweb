@@ -1,19 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 :root {
-  --color-bg: #FAF6F0;
-  --color-bg-alt: #F3E9DC;
+  /* Lilás pastel — artesanal, acolhedor, criativo */
+  --color-bg: #f7f2fb;
+  --color-bg-rgb: 247, 242, 251;
+  --color-bg-alt: #ebe3f5;
   --color-surface: #ffffff;
-  --color-text: #3b2a1e;
-  --color-text-secondary: #7a6454;
-  --color-text-muted: #a89584;
-  --color-accent: #A47551;
-  --color-accent-light: #b8896a;
-  --color-border: #e6d9cc;
-  --color-border-light: #f0e7dd;
-  --color-warm: #D08C7C;
-  --color-warm-light: #e2ada1;
-  --color-olive: #CCD5AE;
+  --color-text: #3d2f4a;
+  --color-text-secondary: #6b5a7a;
+  --color-text-muted: #9a8aad;
+  --color-accent: #7b6ba8;
+  --color-accent-light: #9d8fc4;
+  --color-border: #e4dcf2;
+  --color-border-light: #f0ebf8;
+  --color-warm: #c49bb8;
+  --color-warm-light: #dfc4d8;
+  --color-olive: #9cb89a;
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;

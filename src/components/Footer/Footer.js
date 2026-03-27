@@ -13,7 +13,7 @@ function Footer() {
         <div className="footer__top">
           <div className="footer__brand">
             <Link to="/" className="footer__logo">
-              <span className="footer__logo-text">LOGO</span>
+              <span className="footer__logo-text">Meu Mini Eu</span>
             </Link>
             <p className="footer__tagline">
               Transformando memórias em
@@ -49,7 +49,7 @@ function Footer() {
 
         <div className="footer__bottom">
           <span className="footer__copyright">
-            © {currentYear} LOGO. Todos os direitos reservados.
+            © {currentYear} Meu Mini Eu. Todos os direitos reservados.
           </span>
           <span className="footer__made">
             Feito com dedicação, à mão.

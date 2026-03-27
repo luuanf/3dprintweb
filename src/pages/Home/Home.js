@@ -194,7 +194,7 @@ function EmotionBanner() {
             Vendemos <em>emoções.</em>
           </h2>
           <p className="home-emotion__text">
-            Cada miniatura LOGO carrega uma história. Seja a lembrança de um pet amado,
+            Cada miniatura Meu Mini Eu carrega uma história. Seja a lembrança de um pet amado,
             a celebração de uma conquista ou o presente perfeito para alguém especial.
           </p>
           <div className="home-emotion__stats">

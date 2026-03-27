@@ -1,6 +1,6 @@
 {
-  "short_name": "LOGO",
-  "name": "LOGO — Miniaturas Personalizadas",
+  "short_name": "Meu Mini Eu",
+  "name": "Meu Mini Eu — Miniaturas Personalizadas",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#1a1a1a",
-  "background_color": "#fafafa"
+  "theme_color": "#7b6ba8",
+  "background_color": "#f7f2fb"
 }

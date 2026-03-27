@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #3b2a1e;
+  background: #3d2f4a;
 }
 
 .home-hero__video-container {
@@ -31,7 +31,7 @@
 .home-hero__video-fallback {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #3b2a1e 0%, #5a4234 50%, #3b2a1e 100%);
+  background: linear-gradient(135deg, #3d2f4a 0%, #5a4868 50%, #3d2f4a 100%);
 }
 
 .home-hero__overlay {
@@ -274,7 +274,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-warm);
-  border: 1px solid rgba(201, 169, 110, 0.3);
+  border: 1px solid rgba(196, 155, 184, 0.35);
   padding: 0.4rem 1rem;
   margin-bottom: var(--spacing-md);
 }

@@ -40,7 +40,7 @@ function Header() {
     <header className={`header ${showBg ? 'header--solid' : ''}`}>
       <div className="header__inner container">
         <Link to="/" className="header__logo">
-          <span className="header__logo-text">LOGO</span>
+          <span className="header__logo-text">Meu Mini Eu</span>
         </Link>
 
         <nav className="header__nav header__nav--desktop">

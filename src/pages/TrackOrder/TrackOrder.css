@@ -275,7 +275,7 @@
   height: 28px;
   border-radius: 50%;
   background: var(--color-olive);
-  color: #3b2a1e;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -106,7 +106,7 @@
 
 .pp-hero__btn--added {
   background: var(--color-olive);
-  color: #3b2a1e;
+  color: var(--color-text);
 }
 
 .pp-hero__btn--added:hover {
@@ -532,7 +532,7 @@
 
 .pp-cta__btn--added {
   background: var(--color-olive);
-  color: #3b2a1e;
+  color: var(--color-text);
 }
 
 .pp-cta__btn--order {
