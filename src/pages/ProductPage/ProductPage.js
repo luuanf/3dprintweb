@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
-import { HiOutlineArrowRight, HiOutlineSparkles } from 'react-icons/hi';
+import { HiOutlineSparkles } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 import Gallery from '../../components/common/Gallery';
 import { getCategoryBySlug } from '../../data/products';
 import SEO from '../../components/common/SEO';
 import { SITE_NAME, absoluteUrl } from '../../config/seo';
 import { FIXED_PRICE_CENTS } from '../../data/pricing';
+import { whatsappOrderUrl } from '../../config/contact';
 import './ProductPage.css';
 
 function ProductHero({ product }) {
@@ -35,9 +37,14 @@ function ProductHero({ product }) {
           <p className="pp-hero__desc">{product.heroDescription}</p>
           <span className="pp-hero__price">{product.price}</span>
           <div className="pp-hero__actions">
-            <Link to={`/pedido/${product.slug}`} className="pp-hero__btn pp-hero__btn--secondary">
-              Personalizar e pedir <HiOutlineArrowRight />
-            </Link>
+            <a
+              href={whatsappOrderUrl(product.name, product.price)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pp-hero__btn pp-hero__btn--secondary"
+            >
+              <FaWhatsapp /> Pedir pelo WhatsApp
+            </a>
           </div>
         </motion.div>
 
@@ -182,9 +189,14 @@ function CTASection({ product }) {
           </h2>
           <p className="pp-cta__price">{product.price}</p>
           <div className="pp-cta__actions">
-            <Link to={`/pedido/${product.slug}`} className="pp-cta__btn pp-cta__btn--order">
-              Personalizar e pedir <HiOutlineArrowRight />
-            </Link>
+            <a
+              href={whatsappOrderUrl(product.name, product.price)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pp-cta__btn pp-cta__btn--order"
+            >
+              <FaWhatsapp /> Pedir pelo WhatsApp
+            </a>
           </div>
         </div>
       </div>

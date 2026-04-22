@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineMenuAlt4, HiX, HiOutlineShoppingBag } from 'react-icons/hi';
-import { useCart } from '../../context/CartContext';
+import { HiOutlineMenuAlt4, HiX } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
+import { WHATSAPP_URL } from '../../config/contact';
 import './Header.css';
 
 const navLinks = [
@@ -14,7 +15,6 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const { totalItems } = useCart();
   const isHome = location.pathname === '/';
 
   useEffect(() => {
@@ -56,12 +56,16 @@ function Header() {
         </nav>
 
         <div className="header__right">
-          <Link to="/carrinho" className="header__cart" aria-label="Carrinho">
-            <HiOutlineShoppingBag size={22} />
-            {totalItems > 0 && (
-              <span className="header__cart-badge">{totalItems}</span>
-            )}
-          </Link>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header__cta"
+            aria-label="Falar no WhatsApp"
+          >
+            <FaWhatsapp size={18} />
+            <span className="header__cta-label">Fazer pedido</span>
+          </a>
         </div>
 
         <button
@@ -92,9 +96,14 @@ function Header() {
                 </motion.div>
               ))}
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
-                <Link to="/carrinho" className="header__mobile-link">
-                  Carrinho {totalItems > 0 && `(${totalItems})`}
-                </Link>
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="header__mobile-link header__mobile-link--cta"
+                >
+                  <FaWhatsapp /> Fazer pedido no WhatsApp
+                </a>
               </motion.div>
             </nav>
           </motion.div>

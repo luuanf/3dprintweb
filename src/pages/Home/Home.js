@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { categories } from '../../data/products';
-import { HiOutlineArrowRight } from 'react-icons/hi';
 import { FiInstagram } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
+import { whatsappOrderUrl } from '../../config/contact';
 import Gallery from '../../components/common/Gallery';
 import { HOME_GALLERY_ITEMS } from '../../data/gallery';
 import SEO from '../../components/common/SEO';
@@ -101,9 +102,14 @@ function CategoryShowcase({ category, index, reversed }) {
             <Link to={`/${category.slug}`} className="home-showcase__btn home-showcase__btn--primary">
               Saiba mais
             </Link>
-            <Link to={`/pedido/${category.slug}`} className="home-showcase__btn home-showcase__btn--secondary">
-              Fazer pedido <HiOutlineArrowRight />
-            </Link>
+            <a
+              href={whatsappOrderUrl(category.name, category.price)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-showcase__btn home-showcase__btn--secondary"
+            >
+              <FaWhatsapp /> Fazer pedido
+            </a>
           </div>
         </div>
       </div>

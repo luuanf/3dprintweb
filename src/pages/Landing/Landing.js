@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import {
   HiOutlineArrowRight,
@@ -10,7 +9,9 @@ import {
   HiOutlineClock,
   HiOutlineChatAlt2,
 } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { FIXED_PRICE_CENTS } from '../../data/pricing';
+import { whatsappOrderUrl } from '../../config/contact';
 import './Landing.css';
 
 const FORMATTED_PRICE = `R$${(FIXED_PRICE_CENTS / 100)
@@ -231,9 +232,14 @@ function ChoiceSection() {
                 </ul>
                 <div className="lp-choice__cta-row">
                   <span className="lp-choice__price">{FORMATTED_PRICE}</span>
-                  <Link to={`/pedido/${opt.slug}`} className="lp-btn lp-btn--primary">
-                    {opt.cta} <HiOutlineArrowRight />
-                  </Link>
+                  <a
+                    href={whatsappOrderUrl(opt.kicker, FORMATTED_PRICE)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="lp-btn lp-btn--primary"
+                  >
+                    {opt.cta} <FaWhatsapp />
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -412,12 +418,22 @@ function FinalCta() {
             começa agora.
           </p>
           <div className="lp-final__actions">
-            <Link to="/pedido/boneco" className="lp-btn lp-btn--primary">
-              Quero o Mini Boneco <HiOutlineArrowRight />
-            </Link>
-            <Link to="/pedido/pet" className="lp-btn lp-btn--secondary">
-              Quero o Mini Pet <HiOutlineArrowRight />
-            </Link>
+            <a
+              href={whatsappOrderUrl('Mini Boneco', FORMATTED_PRICE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="lp-btn lp-btn--primary"
+            >
+              Quero o Mini Boneco <FaWhatsapp />
+            </a>
+            <a
+              href={whatsappOrderUrl('Mini Pet', FORMATTED_PRICE)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="lp-btn lp-btn--secondary"
+            >
+              Quero o Mini Pet <FaWhatsapp />
+            </a>
           </div>
           <p className="lp-final__note">
             Sem pagamento online · combinamos tudo pelo WhatsApp após o pedido.

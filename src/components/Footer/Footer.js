@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiInstagram } from 'react-icons/fi';
+import {
+  WHATSAPP_NUMBER_DISPLAY,
+  WHATSAPP_URL,
+  whatsappOrderUrl,
+} from '../../config/contact';
 import './Footer.css';
-
-const WHATSAPP_NUMBER_DISPLAY = '(11) 96842-8139';
-const WHATSAPP_URL = 'https://wa.me/5511968428139';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -33,8 +35,22 @@ function Footer() {
 
           <div className="footer__links-group">
             <h4 className="footer__links-title">Pedidos</h4>
-            <Link to="/pedido/boneco" className="footer__link">Pedir Mini Boneco</Link>
-            <Link to="/pedido/pet" className="footer__link">Pedir Mini Pet</Link>
+            <a
+              href={whatsappOrderUrl('Mini Boneco')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__link"
+            >
+              Pedir Mini Boneco
+            </a>
+            <a
+              href={whatsappOrderUrl('Mini Pet')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__link"
+            >
+              Pedir Mini Pet
+            </a>
           </div>
 
           <div className="footer__links-group">
