@@ -4,10 +4,11 @@ import { motion, useInView } from 'framer-motion';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { FaWhatsapp } from 'react-icons/fa';
 import Gallery from '../../components/common/Gallery';
+import PriceTag from '../../components/common/PriceTag';
 import { getCategoryBySlug } from '../../data/products';
 import SEO from '../../components/common/SEO';
 import { SITE_NAME, absoluteUrl } from '../../config/seo';
-import { FIXED_PRICE_CENTS } from '../../data/pricing';
+import { FIXED_PRICE_CENTS, formatPromoLabel } from '../../data/pricing';
 import { whatsappOrderUrl } from '../../config/contact';
 import './ProductPage.css';
 
@@ -35,10 +36,10 @@ function ProductHero({ product }) {
             ))}
           </h1>
           <p className="pp-hero__desc">{product.heroDescription}</p>
-          <span className="pp-hero__price">{product.price}</span>
+          <PriceTag size="lg" className="pp-hero__price" />
           <div className="pp-hero__actions">
             <a
-              href={whatsappOrderUrl(product.name, product.price)}
+              href={whatsappOrderUrl(product.name, formatPromoLabel())}
               target="_blank"
               rel="noopener noreferrer"
               className="pp-hero__btn pp-hero__btn--secondary"
@@ -187,10 +188,10 @@ function CTASection({ product }) {
           <h2 className="pp-cta__title">
             Bora fazer sua <em>{product.name.toLowerCase()}</em>?
           </h2>
-          <p className="pp-cta__price">{product.price}</p>
+          <PriceTag size="lg" className="pp-cta__price" />
           <div className="pp-cta__actions">
             <a
-              href={whatsappOrderUrl(product.name, product.price)}
+              href={whatsappOrderUrl(product.name, formatPromoLabel())}
               target="_blank"
               rel="noopener noreferrer"
               className="pp-cta__btn pp-cta__btn--order"
@@ -276,7 +277,7 @@ function ProductPage() {
     <div className="product-page">
       <SEO
         title={productTitle}
-        description={`${product.shortDescription} A partir de R$${priceBrl.replace('.', ',')}. Impressão 3D em PLA e pintura à mão.`}
+        description={`${product.shortDescription} Por ${formatPromoLabel()}. Impressão 3D em PLA e pintura à mão.`}
         path={`/${product.slug}`}
         image={seoImage}
         type="product"

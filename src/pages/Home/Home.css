@@ -222,10 +222,6 @@
 }
 
 .home-showcase__price {
-  display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text);
   margin-bottom: var(--spacing-md);
 }
 

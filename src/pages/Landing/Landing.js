@@ -10,13 +10,10 @@ import {
   HiOutlineChatAlt2,
 } from 'react-icons/hi';
 import { FaWhatsapp } from 'react-icons/fa';
-import { FIXED_PRICE_CENTS } from '../../data/pricing';
+import { formatPromoLabel } from '../../data/pricing';
 import { whatsappOrderUrl } from '../../config/contact';
+import PriceTag from '../../components/common/PriceTag';
 import './Landing.css';
-
-const FORMATTED_PRICE = `R$${(FIXED_PRICE_CENTS / 100)
-  .toFixed(2)
-  .replace('.', ',')}`;
 
 const BONECO_IMAGES = ['/media/funko/5.jpg', '/media/funko/6.jpg', '/media/funko/2.jpg'];
 const PET_IMAGES = ['/media/pet/4.jpg', '/media/pet/2.jpg', '/media/pet/1.jpg'];
@@ -118,7 +115,7 @@ function LandingHero() {
             vai ter igual.
           </p>
           <div className="lp-hero__price-row">
-            <span className="lp-hero__price">{FORMATTED_PRICE}</span>
+            <PriceTag size="lg" className="lp-hero__price" />
             <span className="lp-hero__price-note">· 12 cm · peça única</span>
           </div>
           <div className="lp-hero__actions">
@@ -231,9 +228,9 @@ function ChoiceSection() {
                   ))}
                 </ul>
                 <div className="lp-choice__cta-row">
-                  <span className="lp-choice__price">{FORMATTED_PRICE}</span>
+                  <PriceTag size="md" className="lp-choice__price" />
                   <a
-                    href={whatsappOrderUrl(opt.kicker, FORMATTED_PRICE)}
+                    href={whatsappOrderUrl(opt.kicker, formatPromoLabel())}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="lp-btn lp-btn--primary"
@@ -413,13 +410,13 @@ function FinalCta() {
             Sua miniatura está a <em>um clique de ser feita.</em>
           </h2>
           <p className="lp-final__text">
-            Por {FORMATTED_PRICE}, você leva uma peça única, feita à mão, com o
-            carinho de quem se importa com os detalhes. Escolha o estilo e
+            Por {formatPromoLabel()}, você leva uma peça única, feita à mão, com
+            o carinho de quem se importa com os detalhes. Escolha o estilo e
             começa agora.
           </p>
           <div className="lp-final__actions">
             <a
-              href={whatsappOrderUrl('Mini Boneco', FORMATTED_PRICE)}
+              href={whatsappOrderUrl('Mini Boneco', formatPromoLabel())}
               target="_blank"
               rel="noopener noreferrer"
               className="lp-btn lp-btn--primary"
@@ -427,7 +424,7 @@ function FinalCta() {
               Quero o Mini Boneco <FaWhatsapp />
             </a>
             <a
-              href={whatsappOrderUrl('Mini Pet', FORMATTED_PRICE)}
+              href={whatsappOrderUrl('Mini Pet', formatPromoLabel())}
               target="_blank"
               rel="noopener noreferrer"
               className="lp-btn lp-btn--secondary"

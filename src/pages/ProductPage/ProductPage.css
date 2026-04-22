@@ -68,10 +68,6 @@
 }
 
 .pp-hero__price {
-  display: inline-block;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text);
   margin-bottom: var(--spacing-md);
 }
 
@@ -352,11 +348,7 @@
 }
 
 .pp-cta__price {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
-  display: block;
 }
 
 .pp-cta__actions {

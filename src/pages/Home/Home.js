@@ -5,6 +5,8 @@ import { categories } from '../../data/products';
 import { FiInstagram } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { whatsappOrderUrl } from '../../config/contact';
+import { formatPromoLabel } from '../../data/pricing';
+import PriceTag from '../../components/common/PriceTag';
 import Gallery from '../../components/common/Gallery';
 import { HOME_GALLERY_ITEMS } from '../../data/gallery';
 import SEO from '../../components/common/SEO';
@@ -97,13 +99,13 @@ function CategoryShowcase({ category, index, reversed }) {
           <h2 className="home-showcase__title">{category.name}</h2>
           <p className="home-showcase__tagline">{category.tagline}</p>
           <p className="home-showcase__desc">{category.shortDescription}</p>
-          <span className="home-showcase__price">{category.price}</span>
+          <PriceTag size="md" className="home-showcase__price" />
           <div className="home-showcase__actions">
             <Link to={`/${category.slug}`} className="home-showcase__btn home-showcase__btn--primary">
               Saiba mais
             </Link>
             <a
-              href={whatsappOrderUrl(category.name, category.price)}
+              href={whatsappOrderUrl(category.name, formatPromoLabel())}
               target="_blank"
               rel="noopener noreferrer"
               className="home-showcase__btn home-showcase__btn--secondary"

@@ -10,6 +10,7 @@ import { getCategoryBySlug } from '../../data/products';
 import { FIXED_SIZE_CM, FIXED_PRICE_CENTS } from '../../data/pricing';
 import { useCart } from '../../context/CartContext';
 import SEO from '../../components/common/SEO';
+import PriceTag from '../../components/common/PriceTag';
 import './Order.css';
 
 function Order() {
@@ -29,8 +30,6 @@ function Order() {
   };
 
   if (!product) return <Navigate to="/" replace />;
-
-  const priceDisplay = formatPrice(FIXED_PRICE_CENTS);
 
   return (
     <div className="order-page">
@@ -56,7 +55,7 @@ function Order() {
             <h1 className="order-header__title">
               Personalizar <em>{product.name}</em>
             </h1>
-            <p className="order-header__price">{priceDisplay}</p>
+            <p className="order-header__price"><PriceTag size="md" /></p>
           </motion.div>
         </div>
       </section>
@@ -129,7 +128,7 @@ function Order() {
                   </div>
                   <div className="order-summary-box__row">
                     <span>Preço</span>
-                    <span className="order-summary-box__price">{priceDisplay}</span>
+                    <span className="order-summary-box__price">{formatPrice(FIXED_PRICE_CENTS)}</span>
                   </div>
                   <div className="order-summary-box__row">
                     <span>Tamanho</span>
