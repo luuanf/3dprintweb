@@ -1,0 +1,16 @@
+# Parâmetros para instalar a Firebase Extension "Trigger Email from Firestore".
+# Copie este arquivo para `trigger-email.params` e preencha com suas credenciais.
+# Depois rode:
+#   firebase ext:install firebase/firestore-send-email --project=meu-eu-3d \
+#     --params=firebase-ext/trigger-email.params
+
+LOCATION=southamerica-east1
+SMTP_CONNECTION_URI=smtps://SEU_EMAIL@gmail.com:SENHA_DE_APP@smtp.gmail.com:465
+SMTP_PASSWORD=
+MAIL_COLLECTION=mail
+DEFAULT_FROM="Meu Eu 3D <SEU_EMAIL@gmail.com>"
+DEFAULT_REPLY_TO=
+USERS_COLLECTION=
+TEMPLATES_COLLECTION=
+TTL_EXPIRE_TYPE=never
+TTL_EXPIRE_VALUE=

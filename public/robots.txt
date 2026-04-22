@@ -1,3 +1,8 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /carrinho
+Disallow: /checkout
+Disallow: /pedido/
+
+Sitemap: https://meueu3d.com.br/sitemap.xml

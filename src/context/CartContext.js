@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import {
   CATEGORY_BASE_PRICES,
-  getPriceForSize,
-  supportsPieceSize,
+  FIXED_SIZE_CM,
 } from '../data/pricing';
 
 const CartContext = createContext();
@@ -11,21 +10,16 @@ const STORAGE_KEY = 'logo_cart';
 
 function normalizeCartItem(item) {
   const category = item.category;
-  if (!supportsPieceSize(category)) {
-    return {
-      ...item,
-      sizeCm: null,
-      price: CATEGORY_BASE_PRICES[category] ?? item.price,
-    };
-  }
-  const sizeCm = item.sizeCm ?? 10;
-  return { ...item, sizeCm, price: getPriceForSize(category, sizeCm) };
+  return {
+    ...item,
+    sizeCm: FIXED_SIZE_CM,
+    price: CATEGORY_BASE_PRICES[category] ?? item.price,
+  };
 }
 
 const NAMES = {
   funko: 'Mini Funko',
   pet: 'Mini Pet',
-  keychain: 'Chaveiro',
 };
 
 function loadCart() {
@@ -45,12 +39,8 @@ function cartReducer(state, action) {
     case 'ADD_ITEM': {
       const id = `${action.payload.category}_${Date.now()}`;
       const category = action.payload.category;
-      const sizeCm = supportsPieceSize(category)
-        ? action.payload.sizeCm ?? 10
-        : null;
-      const price = supportsPieceSize(category)
-        ? getPriceForSize(category, sizeCm)
-        : CATEGORY_BASE_PRICES[category] || 0;
+      const sizeCm = FIXED_SIZE_CM;
+      const price = CATEGORY_BASE_PRICES[category] || 0;
       return [
         ...state,
         {
@@ -61,9 +51,6 @@ function cartReducer(state, action) {
           sizeCm,
           quantity: 1,
           notes: action.payload.notes || '',
-          photoDataUrl: action.payload.photoDataUrl || '',
-          photoFileId: action.payload.photoFileId || '',
-          previewUrl: action.payload.previewUrl || '',
         },
       ];
     }
@@ -81,17 +68,6 @@ function cartReducer(state, action) {
           ? { ...item, notes: action.payload.notes }
           : item
       );
-    case 'UPDATE_SIZE':
-      return state.map((item) => {
-        if (item.id !== action.payload.id) return item;
-        if (!supportsPieceSize(item.category)) return item;
-        const sizeCm = action.payload.sizeCm;
-        return {
-          ...item,
-          sizeCm,
-          price: getPriceForSize(item.category, sizeCm),
-        };
-      });
     case 'CLEAR':
       return [];
     default:
@@ -103,15 +79,13 @@ export function CartProvider({ children }) {
   const [items, dispatch] = useReducer(cartReducer, [], loadCart);
 
   useEffect(() => {
-    const toSave = items.map(({ photoDataUrl, ...rest }) => rest);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
   const addItem = (payload) => dispatch({ type: 'ADD_ITEM', payload });
   const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id });
   const updateQuantity = (id, quantity) => dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
   const updateNotes = (id, notes) => dispatch({ type: 'UPDATE_NOTES', payload: { id, notes } });
-  const updateSize = (id, sizeCm) => dispatch({ type: 'UPDATE_SIZE', payload: { id, sizeCm } });
   const clearCart = () => dispatch({ type: 'CLEAR' });
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
@@ -128,7 +102,6 @@ export function CartProvider({ children }) {
         removeItem,
         updateQuantity,
         updateNotes,
-        updateSize,
         clearCart,
         totalItems,
         totalPrice,

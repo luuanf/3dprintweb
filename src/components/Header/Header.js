@@ -8,8 +8,6 @@ import './Header.css';
 const navLinks = [
   { label: 'Mini Funko', to: '/funko' },
   { label: 'Mini Pet', to: '/pet' },
-  { label: 'Chaveiros', to: '/chaveiros' },
-  { label: 'Meu Pedido', to: '/rastreio' },
 ];
 
 function Header() {
@@ -35,12 +33,14 @@ function Header() {
   }, [menuOpen]);
 
   const showBg = scrolled || !isHome;
+  const minimal = isHome && !scrolled;
 
   return (
-    <header className={`header ${showBg ? 'header--solid' : ''}`}>
+    <header className={`header ${showBg ? 'header--solid' : ''} ${minimal ? 'header--minimal' : ''}`}>
       <div className="header__inner container">
         <Link to="/" className="header__logo">
-          <span className="header__logo-text">Meu Mini Eu</span>
+          <img src="/logo.png" alt="Meu Eu 3D" className="header__logo-image" />
+          <span className="header__logo-text">Meu Eu 3D</span>
         </Link>
 
         <nav className="header__nav header__nav--desktop">

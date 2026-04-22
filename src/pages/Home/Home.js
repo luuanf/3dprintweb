@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
 import { categories } from '../../data/products';
 import { HiOutlineArrowRight } from 'react-icons/hi';
+import { FiInstagram } from 'react-icons/fi';
+import Gallery from '../../components/common/Gallery';
+import { HOME_GALLERY_ITEMS } from '../../data/gallery';
+import SEO from '../../components/common/SEO';
+import { ORGANIZATION_JSONLD, WEBSITE_JSONLD, absoluteUrl } from '../../config/seo';
 import './Home.css';
 
 function HeroSection() {
@@ -17,7 +22,7 @@ function HeroSection() {
             loop
             playsInline
           >
-            {/* <source src="/path-to-your-video.mp4" type="video/mp4" /> */}
+            <source src="/media/hero/hero.mp4" type="video/mp4" />
           </video>
           <div className="home-hero__video-fallback" />
         </div>
@@ -37,7 +42,7 @@ function HeroSection() {
             <em>em miniatura.</em>
           </h1>
           <p className="home-hero__subtitle">
-            Miniaturas personalizadas, impressas em 3D e pintadas à mão.
+            A gente imprime em 3D e pinta à mão — tudo pra caber na sua estante.
           </p>
         </motion.div>
 
@@ -57,6 +62,7 @@ function HeroSection() {
 function CategoryShowcase({ category, index, reversed }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const featuredImage = category.portfolio?.find((p) => p.image)?.image;
 
   return (
     <motion.section
@@ -68,12 +74,21 @@ function CategoryShowcase({ category, index, reversed }) {
     >
       <div className="home-showcase__inner container">
         <div className="home-showcase__image">
-          <div className="home-showcase__image-placeholder">
-            <span className="home-showcase__image-num">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <span className="home-showcase__image-label">{category.name}</span>
-          </div>
+          {featuredImage ? (
+            <img
+              src={featuredImage}
+              alt={category.name}
+              className="home-showcase__image-photo"
+              loading="lazy"
+            />
+          ) : (
+            <div className="home-showcase__image-placeholder">
+              <span className="home-showcase__image-num">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span className="home-showcase__image-label">{category.name}</span>
+            </div>
+          )}
         </div>
 
         <div className="home-showcase__content">
@@ -96,46 +111,15 @@ function CategoryShowcase({ category, index, reversed }) {
   );
 }
 
-function FeatureBanner() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
-  return (
-    <motion.section
-      ref={ref}
-      className="home-feature"
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.8 }}
-    >
-      <div className="container">
-        <div className="home-feature__inner">
-          <div className="home-feature__badge">✦ Novo</div>
-          <h2 className="home-feature__title">
-            Pré-visualize com <em>Inteligência Artificial</em>
-          </h2>
-          <p className="home-feature__text">
-            Antes de fazer seu pedido, veja como ficará sua miniatura.
-            Nossa IA transforma sua foto em uma prévia realista do produto final.
-          </p>
-          <Link to="/funko" className="home-feature__cta">
-            Experimentar agora <HiOutlineArrowRight />
-          </Link>
-        </div>
-      </div>
-    </motion.section>
-  );
-}
-
 function ProcessSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const steps = [
-    { num: '01', title: 'Escolha a categoria', desc: 'Funko, Pet ou Chaveiro — cada um com seu estilo único.' },
-    { num: '02', title: 'Envie sua foto', desc: 'Veja a prévia com IA antes de confirmar o pedido.' },
-    { num: '03', title: 'Modelagem 3D', desc: 'Nossa equipe cria um modelo exclusivo do zero.' },
-    { num: '04', title: 'Receba em casa', desc: 'Impresso, pintado e entregue com todo cuidado.' },
+    { num: '01', title: 'Escolhe o estilo', desc: 'Mini Funko ou Mini Pet — cada um com seu jeito.' },
+    { num: '02', title: 'Manda o pedido', desc: 'Conta os detalhes da peça e envia pra gente.' },
+    { num: '03', title: 'A gente combina tudo', desc: 'Chamamos no WhatsApp pra pedir as fotos, alinhar detalhes e combinar o pagamento.' },
+    { num: '04', title: 'Modelagem e entrega', desc: 'Criamos sua peça do zero, imprimimos, pintamos à mão e mandamos pra sua casa.' },
   ];
 
   return (
@@ -174,6 +158,76 @@ function ProcessSection() {
   );
 }
 
+const INSTAGRAM_URL = 'https://www.instagram.com/meueu3d';
+const INSTAGRAM_HANDLE = '@meueu3d';
+const INSTAGRAM_PHOTOS = [
+  '/media/funko/5.jpg',
+  '/media/pet/4.jpg',
+  '/media/funko/3.jpg',
+  '/media/pet/2.jpg',
+];
+
+function InstagramSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+
+  return (
+    <section className="home-insta" ref={ref}>
+      <div className="container">
+        <motion.div
+          className="home-insta__inner"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="home-insta__content">
+            <span className="home-insta__label">
+              <FiInstagram /> {INSTAGRAM_HANDLE}
+            </span>
+            <h2 className="home-insta__title">
+              Acompanhe os bastidores
+              <br />
+              <em>no Instagram.</em>
+            </h2>
+            <p className="home-insta__text">
+              A gente posta cada peça saindo do ateliê, bastidores da pintura
+              e ideias pra sua próxima miniatura. Dá aquele follow lá.
+            </p>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-insta__btn"
+            >
+              <FiInstagram /> Seguir no Instagram
+            </a>
+          </div>
+
+          <div className="home-insta__gallery" aria-hidden="true">
+            {INSTAGRAM_PHOTOS.map((src, i) => (
+              <motion.a
+                key={src}
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="home-insta__tile"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+              >
+                <img src={src} alt="" loading="lazy" />
+                <span className="home-insta__tile-overlay">
+                  <FiInstagram />
+                </span>
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 function EmotionBanner() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -189,28 +243,15 @@ function EmotionBanner() {
       <div className="container">
         <div className="home-emotion__content">
           <h2 className="home-emotion__title">
-            Não vendemos objetos.
+            A gente não vende objeto.
             <br />
-            Vendemos <em>emoções.</em>
+            A gente entrega <em>memória.</em>
           </h2>
           <p className="home-emotion__text">
-            Cada miniatura Meu Mini Eu carrega uma história. Seja a lembrança de um pet amado,
-            a celebração de uma conquista ou o presente perfeito para alguém especial.
+            Cada miniatura do Meu Eu 3D tem uma história por trás — o pet que virou parte da família,
+            aquela viagem que ninguém esquece, o presente feito sob medida pra alguém especial.
+            A peça fica, e a lembrança junto.
           </p>
-          <div className="home-emotion__stats">
-            <div className="home-emotion__stat">
-              <span className="home-emotion__stat-value">500+</span>
-              <span className="home-emotion__stat-label">Miniaturas criadas</span>
-            </div>
-            <div className="home-emotion__stat">
-              <span className="home-emotion__stat-value">4.9</span>
-              <span className="home-emotion__stat-label">Avaliação média</span>
-            </div>
-            <div className="home-emotion__stat">
-              <span className="home-emotion__stat-value">100%</span>
-              <span className="home-emotion__stat-label">Artesanal</span>
-            </div>
-          </div>
         </div>
       </div>
     </motion.section>
@@ -218,14 +259,37 @@ function EmotionBanner() {
 }
 
 function Home() {
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: categories.map((cat, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: absoluteUrl(`/${cat.slug}`),
+      name: cat.name,
+    })),
+  };
+
   return (
     <div className="home">
+      <SEO
+        title="Miniaturas personalizadas em 3D e pintadas à mão"
+        description="Miniaturas personalizadas feitas sob encomenda: mini funko da sua cara e mini do seu pet. Impressão 3D em PLA de alta definição e pintura à mão, com envio pra todo o Brasil."
+        path="/"
+        jsonLd={[ORGANIZATION_JSONLD, WEBSITE_JSONLD, itemListJsonLd]}
+      />
       <HeroSection />
       {categories.map((cat, i) => (
         <CategoryShowcase key={cat.id} category={cat} index={i} reversed={i % 2 !== 0} />
       ))}
-      <FeatureBanner />
       <ProcessSection />
+      <Gallery
+        label="Galeria"
+        title={<>Uma olhadinha no que <em>já saiu do ateliê.</em></>}
+        subtitle="Cada peça é feita com cuidado — impressa e pintada por nós. Dá uma passada de olho em alguns trabalhos."
+        items={HOME_GALLERY_ITEMS}
+      />
+      <InstagramSection />
       <EmotionBanner />
     </div>
   );

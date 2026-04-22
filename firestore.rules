@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Pedidos públicos dos clientes
+    match /orders/{orderId} {
+      // Qualquer visitante pode criar um pedido com os campos esperados
+      allow create: if request.resource.data.keys().hasAll(['customer', 'items', 'status', 'createdAt'])
+                    && request.resource.data.customer.keys().hasAll(['name', 'email', 'phone'])
+                    && request.resource.data.items is list
+                    && request.resource.data.items.size() > 0
+                    && request.resource.data.status == 'received';
+      allow read, update, delete: if false;
+    }
+
+    // Fila consumida pela Firebase Extension Trigger Email
+    match /mail/{mailId} {
+      allow create: if request.resource.data.keys().hasAll(['to', 'message']);
+      allow read, update, delete: if false;
+    }
+  }
+}

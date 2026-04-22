@@ -8,7 +8,7 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import Order from './pages/Order/Order';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
-import TrackOrder from './pages/TrackOrder/TrackOrder';
+import Landing from './pages/Landing/Landing';
 import ScrollToTop from './components/common/ScrollToTop';
 import WhatsAppFloat from './components/common/WhatsAppFloat';
 import './App.css';
@@ -24,9 +24,9 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/oferta" element={<Landing />} />
               <Route path="/carrinho" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/rastreio" element={<TrackOrder />} />
               <Route path="/pedido/:slug" element={<Order />} />
               <Route path="/:slug" element={<ProductPage />} />
             </Routes>

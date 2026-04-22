@@ -1,20 +1,16 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, Navigate, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  HiOutlineUpload,
-  HiOutlineSparkles,
-  HiOutlinePhotograph,
-  HiOutlineRefresh,
   HiOutlineArrowLeft,
   HiOutlineShoppingBag,
+  HiOutlineCamera,
 } from 'react-icons/hi';
 import { getCategoryBySlug } from '../../data/products';
-import { getPriceForSize, PIECE_SIZES_CM, supportsPieceSize } from '../../data/pricing';
+import { FIXED_SIZE_CM, FIXED_PRICE_CENTS } from '../../data/pricing';
 import { useCart } from '../../context/CartContext';
+import SEO from '../../components/common/SEO';
 import './Order.css';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 function Order() {
   const { slug } = useParams();
@@ -22,103 +18,28 @@ function Order() {
   const { addItem, formatPrice } = useCart();
   const navigate = useNavigate();
 
-  const [selectedSizeCm, setSelectedSizeCm] = useState(10);
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState(null);
-  const [dragActive, setDragActive] = useState(false);
   const [notes, setNotes] = useState('');
-
-  const fileInputRef = useRef(null);
-
-  const handleFile = useCallback((file) => {
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      setError('Por favor, envie apenas imagens.');
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setError('A imagem deve ter no máximo 10MB.');
-      return;
-    }
-    setError(null);
-    setPreviewImage(null);
-    setUploadedFile(file);
-    const reader = new FileReader();
-    reader.onload = (e) => setUploadedImage(e.target.result);
-    reader.readAsDataURL(file);
-  }, []);
-
-  const handleDrop = useCallback((e) => {
-    e.preventDefault();
-    setDragActive(false);
-    handleFile(e.dataTransfer.files[0]);
-  }, [handleFile]);
-
-  const handleDrag = useCallback((e) => {
-    e.preventDefault();
-    setDragActive(e.type === 'dragenter' || e.type === 'dragover');
-  }, []);
-
-  const handleGenerate = async () => {
-    if (!uploadedFile) return;
-    setIsGenerating(true);
-    setError(null);
-    setPreviewImage(null);
-
-    try {
-      const fd = new FormData();
-      fd.append('image', uploadedFile);
-      fd.append('category', product.id);
-
-      const response = await fetch(`${API_BASE_URL}/api/generate-preview`, {
-        method: 'POST',
-        body: fd,
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => ({}));
-        throw new Error(data.detail || 'Erro ao gerar preview.');
-      }
-
-      const data = await response.json();
-      setPreviewImage(data.image_url.startsWith('http') ? data.image_url : `${API_BASE_URL}${data.image_url}`);
-    } catch (err) {
-      setError(err.message || 'Erro de conexão com o servidor.');
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleReset = () => {
-    setUploadedImage(null);
-    setUploadedFile(null);
-    setPreviewImage(null);
-    setError(null);
-  };
 
   const handleAddToCart = () => {
     addItem({
       category: product.id,
       notes,
-      photoDataUrl: uploadedImage || '',
-      previewUrl: previewImage || '',
-      ...(supportsPieceSize(product.id) ? { sizeCm: selectedSizeCm } : {}),
     });
     navigate('/carrinho');
   };
 
   if (!product) return <Navigate to="/" replace />;
 
-  const piecePrice = supportsPieceSize(product.id)
-    ? getPriceForSize(product.id, selectedSizeCm)
-    : null;
-  const priceDisplay = piecePrice != null ? formatPrice(piecePrice) : product.price;
+  const priceDisplay = formatPrice(FIXED_PRICE_CENTS);
 
   return (
     <div className="order-page">
+      <SEO
+        title={`Personalizar ${product.name}`}
+        description={`Preencha os detalhes pra personalizar sua ${product.name.toLowerCase()} e finalizar o pedido.`}
+        path={`/pedido/${product.slug}`}
+        noIndex
+      />
       <section className="order-header-section">
         <div className="container">
           <Link to={`/${product.slug}`} className="order-back">
@@ -143,98 +64,41 @@ function Order() {
       <section className="order-content">
         <div className="container">
           <div className="order-grid">
-            {/* Left: Upload + AI Preview */}
             <motion.div
-              className="order-preview-col"
+              className="order-info-col"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="order-step">
                 <span className="order-step__num">01</span>
-                <span className="order-step__label">Envie sua foto</span>
+                <span className="order-step__label">Como funciona</span>
               </div>
 
-              <div
-                className={`order-dropzone ${dragActive ? 'order-dropzone--active' : ''} ${uploadedImage ? 'order-dropzone--has-image' : ''}`}
-                onDragEnter={handleDrag}
-                onDragOver={handleDrag}
-                onDragLeave={handleDrag}
-                onDrop={handleDrop}
-                onClick={() => !uploadedImage && fileInputRef.current?.click()}
-              >
-                {uploadedImage ? (
-                  <div className="order-dropzone__uploaded">
-                    <img src={uploadedImage} alt="Uploaded" />
-                    <button
-                      className="order-dropzone__reset"
-                      onClick={(e) => { e.stopPropagation(); handleReset(); }}
-                    >
-                      <HiOutlineRefresh /> Trocar foto
-                    </button>
-                  </div>
-                ) : (
-                  <div className="order-dropzone__empty">
-                    <HiOutlineUpload className="order-dropzone__icon" />
-                    <span className="order-dropzone__title">Arraste sua foto aqui</span>
-                    <span className="order-dropzone__hint">ou clique para selecionar · JPG, PNG até 10MB</span>
-                  </div>
-                )}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFile(e.target.files[0])}
-                  style={{ display: 'none' }}
-                />
-              </div>
-
-              <div className="order-step" style={{ marginTop: '2rem' }}>
-                <span className="order-step__num">02</span>
-                <span className="order-step__label">Pré-visualize com IA</span>
-                <span className="order-step__badge">✦ Opcional</span>
-              </div>
-
-              <div className="order-ai-section">
-                <button
-                  className="order-ai-btn"
-                  onClick={handleGenerate}
-                  disabled={!uploadedImage || isGenerating}
-                >
-                  <HiOutlineSparkles />
-                  {isGenerating ? 'Gerando prévia...' : 'Gerar prévia com IA'}
-                </button>
-                <p className="order-ai-hint">
-                  Veja como ficará sua miniatura antes de adicionar ao carrinho.
-                </p>
-
-                <div className="order-ai-result">
-                  {isGenerating ? (
-                    <div className="order-ai-loading">
-                      <div className="order-ai-spinner" />
-                      <span>Gerando sua miniatura...</span>
-                      <span className="order-ai-loading-hint">Isso pode levar alguns segundos</span>
-                    </div>
-                  ) : previewImage ? (
-                    <div className="order-ai-preview">
-                      <img src={previewImage} alt="AI Preview" />
-                      <p className="order-ai-disclaimer">
-                        * Prévia gerada por IA. O produto final pode ter pequenas variações.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="order-ai-empty">
-                      <HiOutlinePhotograph />
-                      <span>A prévia aparecerá aqui</span>
-                    </div>
-                  )}
+              <div className="order-info-card">
+                <div className="order-info-card__icon">
+                  <HiOutlineCamera />
                 </div>
+                <h3 className="order-info-card__title">
+                  Sem anexo de foto por aqui
+                </h3>
+                <p className="order-info-card__text">
+                  Para deixar tudo mais rápido e pessoal, a foto é combinada
+                  direto com a gente depois. Assim que recebemos seu pedido,
+                  entramos em contato pelo WhatsApp ou e-mail para:
+                </p>
+                <ul className="order-info-card__list">
+                  <li>pedir as fotos de referência que você tiver;</li>
+                  <li>alinhar detalhes de pose, roupa e expressão;</li>
+                  <li>combinar prazo, forma de pagamento e entrega.</li>
+                </ul>
+                <p className="order-info-card__hint">
+                  No próximo passo é só deixar suas observações e adicionar ao
+                  carrinho.
+                </p>
               </div>
-
-              {error && <div className="order-error">{error}</div>}
             </motion.div>
 
-            {/* Right: Notes + Add to Cart */}
             <motion.div
               className="order-form-col"
               initial={{ opacity: 0, y: 30 }}
@@ -242,43 +106,19 @@ function Order() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="order-step">
-                <span className="order-step__num">03</span>
+                <span className="order-step__num">02</span>
                 <span className="order-step__label">Detalhes do pedido</span>
               </div>
 
               <div className="order-details">
-                {supportsPieceSize(product.id) && (
-                  <div className="order-form__group">
-                    <label className="order-form__label">Tamanho da peça</label>
-                    <div className="order-size-picker" role="group" aria-label="Tamanho da peça em centímetros">
-                      {PIECE_SIZES_CM.map((cm) => {
-                        const cents = getPriceForSize(product.id, cm);
-                        const active = selectedSizeCm === cm;
-                        return (
-                          <button
-                            key={cm}
-                            type="button"
-                            className={`order-size-picker__btn ${active ? 'order-size-picker__btn--active' : ''}`}
-                            onClick={() => setSelectedSizeCm(cm)}
-                            aria-pressed={active}
-                          >
-                            <span className="order-size-picker__cm">{cm} cm</span>
-                            <span className="order-size-picker__price">{formatPrice(cents)}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
                 <div className="order-form__group">
                   <label className="order-form__label">Observações</label>
                   <textarea
                     className="order-form__textarea"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Descreva detalhes como pose, roupas, acessórios ou qualquer preferência..."
-                    rows={5}
+                    placeholder="Conte pra gente: pose, roupa, acessórios, alguma referência que gostaria que lembrássemos..."
+                    rows={6}
                   />
                 </div>
 
@@ -291,33 +131,23 @@ function Order() {
                     <span>Preço</span>
                     <span className="order-summary-box__price">{priceDisplay}</span>
                   </div>
-                  {supportsPieceSize(product.id) && (
-                    <div className="order-summary-box__row">
-                      <span>Tamanho</span>
-                      <span>{selectedSizeCm} cm</span>
-                    </div>
-                  )}
                   <div className="order-summary-box__row">
-                    <span>Foto enviada</span>
-                    <span>{uploadedImage ? 'Sim ✓' : 'Pendente'}</span>
-                  </div>
-                  <div className="order-summary-box__row">
-                    <span>Prévia IA</span>
-                    <span>{previewImage ? 'Gerada ✓' : 'Não gerada'}</span>
+                    <span>Tamanho</span>
+                    <span>{FIXED_SIZE_CM} cm</span>
                   </div>
                 </div>
 
                 <button
                   className="order-add-cart"
                   onClick={handleAddToCart}
-                  disabled={!uploadedImage}
                 >
                   <HiOutlineShoppingBag /> Adicionar ao carrinho
                 </button>
 
                 <p className="order-form__note">
-                  Após adicionar ao carrinho, você poderá revisar e finalizar
-                  o pagamento na página de checkout.
+                  Depois de adicionar ao carrinho, é só revisar e enviar o
+                  pedido. A gente te chama para combinar o resto — sem
+                  pagamento online nesta etapa.
                 </p>
               </div>
             </motion.div>

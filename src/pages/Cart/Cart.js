@@ -2,16 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlineTrash, HiOutlinePlus, HiOutlineMinus, HiOutlineArrowLeft, HiOutlineShoppingBag } from 'react-icons/hi';
-import { PIECE_SIZES_CM, supportsPieceSize } from '../../data/pricing';
 import { useCart } from '../../context/CartContext';
+import SEO from '../../components/common/SEO';
 import './Cart.css';
 
 function Cart() {
-  const { items, removeItem, updateQuantity, updateSize, totalPrice, formatPrice } = useCart();
+  const { items, removeItem, updateQuantity, totalPrice, formatPrice } = useCart();
+
+  const seo = (
+    <SEO
+      title="Carrinho"
+      description="Revise os itens selecionados e finalize o pedido."
+      path="/carrinho"
+      noIndex
+    />
+  );
 
   if (items.length === 0) {
     return (
       <div className="cart-page">
+        {seo}
         <div className="cart-empty">
           <motion.div
             className="cart-empty__inner container"
@@ -20,11 +30,11 @@ function Cart() {
             transition={{ duration: 0.5 }}
           >
             <HiOutlineShoppingBag className="cart-empty__icon" />
-            <h2 className="cart-empty__title">Seu carrinho está vazio</h2>
+            <h2 className="cart-empty__title">Seu carrinho tá vazio</h2>
             <p className="cart-empty__text">
-              Explore nossas categorias e adicione suas miniaturas personalizadas.
+              Dá uma passada nas categorias e escolhe a miniatura que tem mais a ver.
             </p>
-            <Link to="/" className="cart-empty__btn">Explorar produtos</Link>
+            <Link to="/" className="cart-empty__btn">Ver produtos</Link>
           </motion.div>
         </div>
       </div>
@@ -33,6 +43,7 @@ function Cart() {
 
   return (
     <div className="cart-page">
+      {seo}
       <section className="cart-section">
         <div className="container">
           <motion.div
@@ -59,33 +70,15 @@ function Cart() {
                   transition={{ duration: 0.4, delay: i * 0.05 }}
                 >
                   <div className="cart-item__image">
-                    {item.previewUrl ? (
-                      <img src={item.previewUrl} alt={item.name} />
-                    ) : (
-                      <div className="cart-item__placeholder">
-                        <span>{item.name.charAt(0)}</span>
-                      </div>
-                    )}
+                    <div className="cart-item__placeholder">
+                      <span>{item.name.charAt(0)}</span>
+                    </div>
                   </div>
 
                   <div className="cart-item__info">
                     <h3 className="cart-item__name">{item.name}</h3>
                     <span className="cart-item__category">{item.category}</span>
-                    {supportsPieceSize(item.category) && item.sizeCm != null && (
-                      <div className="cart-item__sizes" role="group" aria-label="Tamanho da peça">
-                        {PIECE_SIZES_CM.map((cm) => (
-                          <button
-                            key={cm}
-                            type="button"
-                            className={`cart-item__size-btn ${item.sizeCm === cm ? 'cart-item__size-btn--active' : ''}`}
-                            onClick={() => updateSize(item.id, cm)}
-                            aria-pressed={item.sizeCm === cm}
-                          >
-                            {cm} cm
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    {item.sizeCm != null && <span className="cart-item__category">{item.sizeCm} cm</span>}
                     {item.notes && <p className="cart-item__notes">{item.notes}</p>}
                   </div>
 
@@ -145,20 +138,16 @@ function Cart() {
               <div className="cart-summary__divider" />
 
               <div className="cart-summary__total">
-                <span>Total</span>
+                <span>Total estimado</span>
                 <span>{formatPrice(totalPrice)}</span>
               </div>
 
-              <p className="cart-summary__installments">
-                ou até 12× de {formatPrice(Math.ceil(totalPrice / 12))}
-              </p>
-
               <Link to="/checkout" className="cart-summary__checkout">
-                Ir para pagamento
+                Finalizar pedido
               </Link>
 
               <p className="cart-summary__note">
-                Frete calculado no checkout
+                Sem pagamento online por aqui — a gente combina o resto no WhatsApp.
               </p>
             </motion.div>
           </div>

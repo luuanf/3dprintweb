@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Meu Eu 3D — Web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Site institucional e de pedidos do estúdio **Meu Eu 3D** (miniaturas
+impressas em 3D e pintadas à mão). Front-end em React (CRA) com backend
+100% Firebase, rodando no plano gratuito (Spark): Firestore + Hosting.
 
-## Available Scripts
+> O cliente envia o pedido sem anexar foto. A foto e demais detalhes são
+> combinados direto pelo WhatsApp/e-mail pela equipe do estúdio.
 
-In the project directory, you can run:
+## Stack
 
-### `npm start`
+- React 19 + React Router 7
+- framer-motion, react-icons
+- Firebase Web SDK (Firestore)
+- Firebase Extension (opcional): **Trigger Email from Firestore**
+- Firebase Hosting para deploy
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Variáveis de ambiente
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Copie `.env.example` para `.env` e preencha com as credenciais do Firebase:
 
-### `npm test`
+```bash
+REACT_APP_FIREBASE_API_KEY=
+REACT_APP_FIREBASE_AUTH_DOMAIN=
+REACT_APP_FIREBASE_PROJECT_ID=meu-eu-3d
+REACT_APP_FIREBASE_STORAGE_BUCKET=
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+REACT_APP_FIREBASE_APP_ID=
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# E-mail que recebe a notificação de novo pedido (opcional)
+REACT_APP_ORDER_NOTIFICATION_EMAIL=
+```
 
-### `npm run build`
+Para gerar com a configuração correta do projeto:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+firebase apps:sdkconfig WEB --project meu-eu-3d
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Desenvolvimento
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+npm start      # http://localhost:3000
+```
 
-### `npm run eject`
+## Deploy
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm run build
+firebase deploy --only hosting,firestore:rules
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Fluxo de pedidos
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Cliente escolhe o produto, o tamanho e escreve observações em `/pedido/:slug`.
+2. Item entra no carrinho (estado local + `localStorage`).
+3. Em `/checkout` o cliente preenche dados de contato e clica em "Enviar pedido".
+4. O pedido é gravado em `orders/{orderId}` no Firestore e (se configurado)
+   um documento em `mail/` dispara a Firebase Extension "Trigger Email from
+   Firestore" para avisar o dono por e-mail.
+5. Em seguida, a equipe entra em contato com o cliente pelo WhatsApp/e-mail
+   para pedir as fotos de referência, alinhar detalhes e combinar pagamento.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Coleções Firestore
 
-## Learn More
+- `orders/{orderId}`: documento do pedido (cliente, itens, status, totalCents).
+- `mail/{id}`: fila consumida pela extension Trigger Email (opcional).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Plano gratuito
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Este projeto está desenhado para rodar inteiramente no plano Spark:
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Não usa** Firebase Storage (foto é combinada fora do sistema).
+- **Não precisa** de Cloud Functions próprias.
+- A extension "Trigger Email" é opcional e exige Blaze — se não for
+  instalada, os pedidos continuam sendo salvos normalmente; apenas o
+  aviso automático por e-mail fica desligado.

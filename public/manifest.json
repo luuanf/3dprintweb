@@ -1,6 +1,8 @@
 {
-  "short_name": "Meu Mini Eu",
-  "name": "Meu Mini Eu — Miniaturas Personalizadas",
+  "short_name": "Meu Eu 3D",
+  "name": "Meu Eu 3D — Miniaturas Personalizadas",
+  "description": "Miniaturas personalizadas em impressão 3D de alta definição e pintura à mão. Transformamos suas memórias em peças únicas.",
+  "lang": "pt-BR",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +20,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "theme_color": "#7b6ba8",
   "background_color": "#f7f2fb"
 }
