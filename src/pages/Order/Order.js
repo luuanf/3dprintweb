@@ -85,7 +85,7 @@ function Order() {
                 <p className="order-info-card__text">
                   Para deixar tudo mais rápido e pessoal, a foto é combinada
                   direto com a gente depois. Assim que recebemos seu pedido,
-                  entramos em contato pelo WhatsApp ou e-mail para:
+                  entramos em contato pelo WhatsApp para:
                 </p>
                 <ul className="order-info-card__list">
                   <li>pedir as fotos de referência que você tiver;</li>

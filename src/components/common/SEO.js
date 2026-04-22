@@ -16,7 +16,7 @@ import {
  * Props:
  * - title: título da página (sem o sufixo do site)
  * - description: meta description
- * - path: caminho relativo (ex.: "/funko") usado para canonical e OG url
+ * - path: caminho relativo (ex.: "/boneco") usado para canonical e OG url
  * - image: URL absoluta ou relativa pra imagem de preview
  * - keywords: array de palavras-chave
  * - type: "website" | "product" | "article" ...

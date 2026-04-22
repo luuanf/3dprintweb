@@ -116,7 +116,7 @@ function ProcessSection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const steps = [
-    { num: '01', title: 'Escolhe o estilo', desc: 'Mini Funko ou Mini Pet — cada um com seu jeito.' },
+    { num: '01', title: 'Escolhe o estilo', desc: 'Mini Boneco ou Mini Pet — cada um com seu jeito.' },
     { num: '02', title: 'Manda o pedido', desc: 'Conta os detalhes da peça e envia pra gente.' },
     { num: '03', title: 'A gente combina tudo', desc: 'Chamamos no WhatsApp pra pedir as fotos, alinhar detalhes e combinar o pagamento.' },
     { num: '04', title: 'Modelagem e entrega', desc: 'Criamos sua peça do zero, imprimimos, pintamos à mão e mandamos pra sua casa.' },
@@ -274,7 +274,7 @@ function Home() {
     <div className="home">
       <SEO
         title="Miniaturas personalizadas em 3D e pintadas à mão"
-        description="Miniaturas personalizadas feitas sob encomenda: mini funko da sua cara e mini do seu pet. Impressão 3D em PLA de alta definição e pintura à mão, com envio pra todo o Brasil."
+        description="Bonecos personalizados e miniaturas do seu pet feitos sob encomenda: um boneco com a sua cara ou uma miniatura do seu bichinho. Impressão 3D em PLA de alta definição e pintura à mão, com envio pra todo o Brasil."
         path="/"
         jsonLd={[ORGANIZATION_JSONLD, WEBSITE_JSONLD, itemListJsonLd]}
       />

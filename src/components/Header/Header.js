@@ -6,7 +6,7 @@ import { useCart } from '../../context/CartContext';
 import './Header.css';
 
 const navLinks = [
-  { label: 'Mini Funko', to: '/funko' },
+  { label: 'Mini Boneco', to: '/boneco' },
   { label: 'Mini Pet', to: '/pet' },
 ];
 

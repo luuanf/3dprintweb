@@ -2,15 +2,15 @@ import { formatStartingPrice } from './pricing';
 
 export const categories = [
   {
-    id: 'funko',
-    slug: 'funko',
-    name: 'Mini Funko',
+    id: 'boneco',
+    slug: 'boneco',
+    name: 'Mini Boneco',
     tagline: 'Sua cara, em miniatura.',
-    shortDescription: 'Miniatura estilo Funko, feita a partir de uma foto sua — impressa e pintada à mão.',
-    heroSubtitle: 'Colecionáveis personalizados',
-    heroTitle: 'Sua cara de\ncolecionável.',
-    heroDescription: 'A partir de uma foto sua (ou de quem você quer presentear), a gente cria uma miniatura estilo Funko, imprime em 3D de alta resolução e finaliza tudo à mão. Sai uma peça só sua.',
-    price: formatStartingPrice('funko'),
+    shortDescription: 'Boneco personalizado feito a partir de uma foto sua — impresso em 3D e pintado à mão.',
+    heroSubtitle: 'Bonecos personalizados',
+    heroTitle: 'Sua cara em\nminiatura.',
+    heroDescription: 'A partir de uma foto sua (ou de quem você quer presentear), a gente cria um boneco personalizado em miniatura, imprime em 3D de alta resolução e finaliza tudo à mão. Sai uma peça só sua.',
+    price: formatStartingPrice('boneco'),
     sections: [
       {
         id: 'detail',
@@ -19,8 +19,8 @@ export const categories = [
         description: 'Do formato do rosto ao corte do cabelo, a gente cuida de cada detalhe pra capturar o jeito de quem é retratado. Nenhuma miniatura sai igual à outra.',
         features: [
           'Tamanho padrão de 12 cm',
-          'Cabeça oversized no estilo Funko',
-          'Olhos redondos característicos',
+          'Cabeça estilizada com traços marcantes',
+          'Olhos expressivos e personalidade',
           'Roupa e acessórios do jeito que você pedir',
         ],
       },

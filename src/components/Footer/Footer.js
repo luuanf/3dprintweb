@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HiOutlineMail } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { FiInstagram } from 'react-icons/fi';
 import './Footer.css';
+
+const WHATSAPP_NUMBER_DISPLAY = '(11) 96842-8139';
+const WHATSAPP_URL = 'https://wa.me/5511968428139';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -24,20 +27,25 @@ function Footer() {
 
           <div className="footer__links-group">
             <h4 className="footer__links-title">Produtos</h4>
-            <Link to="/funko" className="footer__link">Mini Funko</Link>
+            <Link to="/boneco" className="footer__link">Mini Boneco</Link>
             <Link to="/pet" className="footer__link">Mini Pet</Link>
           </div>
 
           <div className="footer__links-group">
             <h4 className="footer__links-title">Pedidos</h4>
-            <Link to="/pedido/funko" className="footer__link">Pedir Mini Funko</Link>
+            <Link to="/pedido/boneco" className="footer__link">Pedir Mini Boneco</Link>
             <Link to="/pedido/pet" className="footer__link">Pedir Mini Pet</Link>
           </div>
 
           <div className="footer__links-group">
             <h4 className="footer__links-title">Contato</h4>
-            <a href="mailto:contato@meueu3d.com.br" className="footer__link footer__link--icon">
-              <HiOutlineMail /> contato@meueu3d.com.br
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer__link footer__link--icon"
+            >
+              <FaWhatsapp /> {WHATSAPP_NUMBER_DISPLAY}
             </a>
             <a href="https://www.instagram.com/meueu3d" target="_blank" rel="noopener noreferrer" className="footer__link footer__link--icon">
               <FiInstagram /> @meueu3d

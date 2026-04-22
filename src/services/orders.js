@@ -16,7 +16,7 @@ const nanoid = customAlphabet('ABCDEFGHJKLMNPQRSTUVWXYZ23456789', 8);
 const NOTIFICATION_EMAIL = process.env.REACT_APP_ORDER_NOTIFICATION_EMAIL || '';
 
 const CATEGORY_NAMES = {
-  funko: 'Mini Funko',
+  boneco: 'Mini Boneco',
   pet: 'Mini Pet',
 };
 

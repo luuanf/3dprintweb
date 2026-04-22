@@ -3,7 +3,7 @@ export const FIXED_SIZE_CM = 12;
 export const FIXED_PRICE_CENTS = 17999;
 
 export const CATEGORY_BASE_PRICES = {
-  funko: FIXED_PRICE_CENTS,
+  boneco: FIXED_PRICE_CENTS,
   pet: FIXED_PRICE_CENTS,
 };
 

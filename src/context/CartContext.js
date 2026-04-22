@@ -18,7 +18,7 @@ function normalizeCartItem(item) {
 }
 
 const NAMES = {
-  funko: 'Mini Funko',
+  boneco: 'Mini Boneco',
   pet: 'Mini Pet',
 };
 

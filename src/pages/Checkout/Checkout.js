@@ -83,9 +83,8 @@ function Checkout() {
               Seu pedido é o <strong>{orderResult.orderId}</strong>
             </p>
             <p className="checkout-success__text">
-              Já recebemos seu pedido aqui. Em breve a gente te chama pelo
-              WhatsApp <strong>{customer.phone}</strong> (ou e-mail{' '}
-              <strong>{customer.email}</strong>) para pedir as fotos de
+              Já recebemos seu pedido aqui. Em breve a gente te chama no
+              WhatsApp <strong>{customer.phone}</strong> pra pedir as fotos de
               referência, alinhar detalhes da peça e combinar prazo e
               pagamento.
             </p>

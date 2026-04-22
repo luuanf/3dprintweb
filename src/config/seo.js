@@ -15,19 +15,19 @@ export const SITE_NAME = 'Meu Eu 3D';
 export const DEFAULT_TITLE = 'Meu Eu 3D — Miniaturas personalizadas em impressão 3D';
 
 export const DEFAULT_DESCRIPTION =
-  'Miniaturas personalizadas feitas sob encomenda: impressão 3D em PLA de alta definição e pintura à mão. Transformamos fotos suas e do seu pet em peças únicas pra guardar pra sempre.';
+  'Bonecos personalizados e miniaturas do seu pet feitos sob encomenda: impressão 3D em PLA de alta definição e pintura à mão. Transformamos fotos suas e do seu bichinho em peças únicas pra guardar pra sempre.';
 
 export const DEFAULT_KEYWORDS = [
   'miniatura personalizada',
+  'boneco personalizado',
+  'boneco 3d personalizado',
+  'boneco com a sua cara',
   'impressão 3D',
-  'mini funko personalizado',
-  'funko personalizado',
   'miniatura de pet',
   'miniatura do meu cachorro',
   'miniatura do meu gato',
   'presente personalizado',
   'topo de bolo casamento',
-  'boneco personalizado',
   'impressão 3D em PLA',
   'pintura à mão',
   'meu eu 3d',
@@ -49,8 +49,8 @@ export const ORGANIZATION_JSONLD = {
     {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'contato@meueu3d.com.br',
-      url: 'https://www.instagram.com/meueu3d',
+      telephone: '+55-11-96842-8139',
+      url: 'https://wa.me/5511968428139',
       availableLanguage: ['Portuguese'],
     },
   ],

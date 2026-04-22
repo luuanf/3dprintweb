@@ -17,7 +17,7 @@ const FORMATTED_PRICE = `R$${(FIXED_PRICE_CENTS / 100)
   .toFixed(2)
   .replace('.', ',')}`;
 
-const FUNKO_IMAGES = ['/media/funko/5.jpg', '/media/funko/6.jpg', '/media/funko/2.jpg'];
+const BONECO_IMAGES = ['/media/funko/5.jpg', '/media/funko/6.jpg', '/media/funko/2.jpg'];
 const PET_IMAGES = ['/media/pet/4.jpg', '/media/pet/2.jpg', '/media/pet/1.jpg'];
 
 const GALLERY = [
@@ -141,13 +141,13 @@ function LandingHero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="lp-hero__gallery-big">
-            <img src="/media/funko/5.jpg" alt="Mini Funko personalizado" loading="eager" />
+            <img src="/media/funko/5.jpg" alt="Mini Boneco personalizado" loading="eager" />
           </div>
           <div className="lp-hero__gallery-small">
             <img src="/media/pet/4.jpg" alt="Mini Pet personalizado" loading="eager" />
           </div>
           <div className="lp-hero__gallery-tiny">
-            <img src="/media/funko/3.jpg" alt="Mini Funko detalhe" loading="lazy" />
+            <img src="/media/funko/3.jpg" alt="Mini Boneco detalhe" loading="lazy" />
           </div>
         </motion.div>
       </div>
@@ -158,13 +158,13 @@ function LandingHero() {
 function ChoiceSection() {
   const options = [
     {
-      slug: 'funko',
-      kicker: 'Mini Funko',
+      slug: 'boneco',
+      kicker: 'Mini Boneco',
       title: 'Sua cara em miniatura',
-      text: 'Uma versão colecionável de quem você quiser. Personagem, você mesmo, alguém especial.',
-      bullets: ['Cabeça no estilo Funko', 'Roupa e acessórios à sua escolha', 'Base com nome (se quiser)'],
-      images: FUNKO_IMAGES,
-      cta: 'Quero o Mini Funko',
+      text: 'Um boneco personalizado de quem você quiser. Personagem, você mesmo, alguém especial.',
+      bullets: ['Traços e feições personalizados', 'Roupa e acessórios à sua escolha', 'Base com nome (se quiser)'],
+      images: BONECO_IMAGES,
+      cta: 'Quero o Mini Boneco',
     },
     {
       slug: 'pet',
@@ -412,8 +412,8 @@ function FinalCta() {
             começa agora.
           </p>
           <div className="lp-final__actions">
-            <Link to="/pedido/funko" className="lp-btn lp-btn--primary">
-              Quero o Mini Funko <HiOutlineArrowRight />
+            <Link to="/pedido/boneco" className="lp-btn lp-btn--primary">
+              Quero o Mini Boneco <HiOutlineArrowRight />
             </Link>
             <Link to="/pedido/pet" className="lp-btn lp-btn--secondary">
               Quero o Mini Pet <HiOutlineArrowRight />
